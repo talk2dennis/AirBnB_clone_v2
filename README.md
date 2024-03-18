@@ -1,6 +1,8 @@
 <center> <h1>HBNB - The Console</h1> </center>
 
-This repository contains the initial stage of a student project to build a clone of the AirBnB website. This stage implements a backend interface, or console, to manage program data. Console commands allow the user to create, update, and destroy objects, as well as manage file storage. Using a system of JSON serialization/deserialization, storage is persistent between sessions.
+# AirBnB Clone Version 2
+--
+This repository serves as the second iteration of our AirBnB clone project, marking a significant advancement from its predecessor developed during Sprint 2 of the ALX Software Engineering Program. Our primary objective in this phase is to enhance the functionality of our application by seamlessly mapping Python classes to MySQL database tables. To accomplish this, we leverage the powerful capabilities of SQLAlchemy, a Python SQL toolkit and Object-Relational Mapping (ORM) library.
 
 ---
 
