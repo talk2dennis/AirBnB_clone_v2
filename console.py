@@ -110,6 +110,7 @@ class HBNBCommand(cmd.Cmd):
             obj = eval(f"{argl[0]}()")
             for param in argl[1:]:
                 key, value = param.split("=")
+                value.replace("_", " ").replace('"', '\\"')
                 setattr(obj, key, value)
             obj.save()
             print(obj.id)
