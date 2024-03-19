@@ -106,11 +106,24 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
+
+        # check if parameters are supplied
         if len(argl) > 1:
             obj = eval(f"{argl[0]}()")
             for param in argl[1:]:
                 key, value = param.split("=")
+
+                # replaces the _ in the values of the param
                 value = value.replace("_", " ").replace('"', '\\"')
+                # check for numbers or float and converts
+                if value.isdigit():
+                    value = int(value)
+                else:
+                    if "." in value:
+                        try:
+                            value = float(value)
+                        except ValueError:
+                            pass
                 setattr(obj, key, value)
             obj.save()
             print(obj.id)
