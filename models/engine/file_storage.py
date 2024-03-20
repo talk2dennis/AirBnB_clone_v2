@@ -19,7 +19,7 @@ class FileStorage:
             for data in self.__objects:
                 if (data.split(".")[0] == cls.__name__):
                     objs[data] = self.__objects[data]
-                return objs
+            return objs
         return FileStorage.__objects
 
     def new(self, obj):

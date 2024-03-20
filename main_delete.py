@@ -40,9 +40,10 @@ for state_key in all_states.keys():
 
 # Delete the new State
 fs.delete(new_state)
+fs.delete(another_state)
 
 # All States
 all_states = fs.all(State)
 print("All States: {}".format(len(all_states.keys())))
 for state_key in all_states.keys():
-    print(type(new_state).__name__)
+    print(all_states[state_key])
