@@ -26,7 +26,7 @@ class DBStorage:
         env = getenv("HBNB_ENV")
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, db),
+                                      .format(user, pwd, host, db),
                                       pool_pre_ping=True)
 
         if env == "test":
@@ -46,9 +46,10 @@ class DBStorage:
                 key = f"{type(data).__name__}.{data.id}"
                 dic[key] = data
         else:
-            lists = [State, City, User, Place, Review, Amenity]
+            lists = [State, City]#, User, Place, Review, Amenity]
             for obj in lists:
-                datas = self.__session.query(clase)
+                datas = self.__session.query(obj)
+                print(f"result: {datas}")
                 for data in datas:
                     key = f"{type(data).__name__}.{data.id}"
                     dic[key] = data
