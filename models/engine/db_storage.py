@@ -49,7 +49,6 @@ class DBStorage:
             lists = [State, City]#, User, Place, Review, Amenity]
             for obj in lists:
                 datas = self.__session.query(obj)
-                print(f"result: {datas}")
                 for data in datas:
                     key = f"{type(data).__name__}.{data.id}"
                     dic[key] = data
