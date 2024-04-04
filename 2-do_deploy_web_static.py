@@ -7,6 +7,7 @@ a Fabric script that generates a .tgz archive from the contents of the
 
 from fabric.api import *
 from datetime import datetime
+import time
 import os
 
 
@@ -43,7 +44,8 @@ def do_deploy(archive_path):
         run(f"sudo mkdir -p {dest}")
         run(f"sudo tar -xzf /tmp/{f_name} -C {dest}")
         run(f"sudo rm /tmp/{f_name}")
-        run(f"sudo mv -f {dest}/web_static/. {dest}")
+        time.sleep(2)
+        run(f"sudo mv -f {dest}/web_static/* {dest}")
         run(f"sudo rm -rf {dest}/web_static/")
         run("sudo rm -rf /data/web_static/current")
         run(f"sudo ln -s {dest}/ /data/web_static/current")
