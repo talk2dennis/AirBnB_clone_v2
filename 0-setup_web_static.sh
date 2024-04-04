@@ -19,15 +19,15 @@ sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
 # create fake html file 
-echo $page | sudo tee "/data/web_static/releases/test/index.html" > "/dev/null"
+echo "$page" | sudo tee "/data/web_static/releases/test/index.html" > "/dev/null"
 
 # check if file exists and delete
-if [ -f /data/web_static/current ]; then
-	rm /data/web_static/current
-fi
+#if [ -f /data/web_static/current ]; then
+#	rm /data/web_static/current
+#fi
 
 # create a symbolic link
-ln -s /data/web_static/current /data/web_static/releases/test/
+ln -sf /data/web_static/current /data/web_static/releases/test/
 
 # give file ownership to ubuntu
 chown -R ubuntu:ubuntu /data
