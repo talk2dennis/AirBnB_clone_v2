@@ -4,8 +4,11 @@ a Fabric script that generates a .tgz archive from the contents of the
     web_static
 """
 
+
 from fabric.api import *
 from datetime import datetime
+import os
+
 
 env.user = "ubuntu"
 env.hosts = ["54.197.44.251", "34.207.121.185"]
