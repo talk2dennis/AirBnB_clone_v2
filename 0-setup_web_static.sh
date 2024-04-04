@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Bash script that sets up your web servers for the deployment of web_static
 
+# Define the hostname variable
+hostname=$(hostname)
+
+
 # html content
 page="\
 <html>
@@ -27,13 +31,38 @@ echo "$page" | sudo tee "/data/web_static/releases/test/index.html" > "/dev/null
 #fi
 
 # create a symbolic link
-ln -sf /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # give file ownership to ubuntu
 chown -R ubuntu:ubuntu /data
 
 # using alias to state the location of the static content for images
-sudo sed -i '39 i\ \tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n' /etc/nginx/sites-enabled/default
+sudo printf %s "\
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location /hbnb_static {
+                alias /data/web_static/current;
+        }
+        error_page 404 /custom_404.html;
+
+        # custom header
+        add_header X-Served-By $hostname;
+
+        location /redirect_me {
+
+                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+
+        }
+
+}" > /etc/nginx/sites-available/default
 
 # reload nginx
 sudo service nginx restart
