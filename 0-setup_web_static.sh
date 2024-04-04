@@ -27,7 +27,7 @@ echo "$page" | sudo tee "/data/web_static/releases/test/index.html" > "/dev/null
 #fi
 
 # create a symbolic link
-ln -sf /data/web_static/current /data/web_static/releases/test/
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # give file ownership to ubuntu
 chown -R ubuntu:ubuntu /data
