@@ -40,7 +40,7 @@ def do_deploy(archive_path):
     dest = f"/data/web_static/releases/{p_name}"
     if os.path.exists(archive_path):
         put(archive_path, "/tmp/")
-        run(f"sudo mkdir mkdir -p /data/web_static/releases/{p_name}")
+        run(f"sudo mkdir -p /data/web_static/releases/{p_name}")
         run(f"sudo tar -xzf /tmp/{f_name} -C {dest}")
         run("sudo rm /tmp/{f_name}")
         run(f"sudo mv {dest}/web_static/* {dest}/")
