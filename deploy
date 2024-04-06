@@ -1,0 +1,25 @@
+# create the release directory
+sudo mkdir -p /data/web_static/releases/web_static_20240406123335
+
+# create the current folder
+sudo mkdir -p /data/web_static/current
+
+# move the file to tmp
+sudo mv versions/web_static_20240406123335.tgz /tmp/
+
+# unzip the file
+sudo tar -xzf /tmp/web_static_20240406123335.tgz -C /data/web_static/releases/web_static_20240406123335
+
+# move from web_static to the versions
+sudo mv /data/web_static/releases/web_static_20240406123335/web_static/* /data/web_static/releases/web_static_20240406123335/
+
+# remove webstatic
+sudo rm -rf /data/web_static/releases/web_static_20240406123335/web_static/
+
+# remove current
+sudo rm -rf /data/web_static/current
+
+# link releases to current
+sudo ln -sf /data/web_static/releases/web_static_20240406123335 /data/web_static/current
+
+print("New version deployed!")
