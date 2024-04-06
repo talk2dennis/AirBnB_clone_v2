@@ -7,7 +7,6 @@ a Fabric script that generates a .tgz archive from the contents of the
 
 from fabric.api import *
 from datetime import datetime
-import time
 import os
 
 
@@ -52,4 +51,15 @@ def do_deploy(archive_path):
         print("New version deployed!")
         return True
     else:
+        return False
+
+def deploy():
+    """
+        creates and distributes an archive to your web servers,
+            using the function deploy
+    """
+    try:
+        archive_path = do_pack()
+        return do_deploy(archive_path)
+    except:
         return False
