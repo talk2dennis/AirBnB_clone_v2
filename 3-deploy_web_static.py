@@ -35,19 +35,18 @@ def do_deploy(archive_path):
     """
         a fabfile to unpack .tgz file and upload to the remote server
     """
-    f_name = archive_path.split('/')[-1]
+    f_name = archive_path.split("/")[-1]
     p_name = f_name.split('.')[0]
     dest = f"/data/web_static/releases/{p_name}"
     if os.path.exists(archive_path):
         put(archive_path, "/tmp/")
-        run(f"mkdir -p {dest}")
-        run(f"mkdir -p /data/web_static/current")
-        run(f"tar -xzf /tmp/{f_name} -C {dest}")
-        run(f"rm /tmp/{f_name}")
-        run(f"mv {dest}/web_static/* {dest}")
-        run(f"rm -rf {dest}/web_static")
-        run("rm -rf /data/web_static/current")
-        run(f"ln -sf {dest}/ /data/web_static/current")
+        run("mkdir -p {}".format(dest))
+        run("tar -xzf /tmp/{} -C {}".format(f_name, dest))
+        run("rm /tmp/{}".format(f_name))
+        run("mv {}/web_static/* {}/".format(dest, dest))
+        run("rm -rf {}/web_static".format(dest))
+        run('rm -rf /data/web_static/current')
+        run("ln -s {} /data/web_static/current".format(dest))
         print("New version deployed!")
         return True
     else:
