@@ -46,7 +46,7 @@ def do_deploy(archive_path):
         run(f"sudo tar -xzf /tmp/{f_name} -C {dest}")
         run(f"sudo rm /tmp/{f_name}")
         run(f"sudo mv {dest}/web_static/* {dest}")
-        run(f"sudo rm -r {dest}/web_static/*")
+        run(f"sudo rm -rf {dest}/web_static")
         run("sudo rm -rf /data/web_static/current")
         run(f"sudo ln -sf {dest}/ /data/web_static/current")
         print("New version deployed!")
