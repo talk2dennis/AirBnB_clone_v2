@@ -64,3 +64,20 @@ def deploy():
         return do_deploy(archive_path)
     else:
         return False
+
+
+def do_clean(number=0):
+    """
+        Fabric script (based on the file 3-deploy_web_static.py)
+            that deletes out-of-date archives, using the function do_clean
+    """
+
+    dest = "/data/web_static/releases"
+    number = int(number)
+    if number == 0:
+        number = 2
+    else:
+        number += 1
+
+    local(f"ls -t versions/ | tail -n +{number} | xargs rm -rf")
+    run(f"ls -t {dest} | tail -n +{number} | xargs rm -rf")
