@@ -79,5 +79,5 @@ def do_clean(number=0):
     else:
         number += 1
 
-    local(f"cd versions/; ls -t | tail -n +{number} | xargs rm -rf")
-    run(f"cd {dest}; ls -t | tail -n +{number} | xargs rm -rf")
+    local(f"cd versions/; ls -t | tail -n +{number} | xargs sudo rm -rf")
+    run(f"cd {dest}; ls -t | tail -n +{number} | xargs sudo rm -rf")
