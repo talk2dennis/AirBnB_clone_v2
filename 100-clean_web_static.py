@@ -79,5 +79,5 @@ def do_clean(number=0):
     else:
         number += 1
 
-    local(f"ls -t versions/ | tail -n +{number} | xargs rm -rf")
-    run(f"ls -t {dest} | tail -n +{number} | xargs rm -rf")
+    local(f"ls -t versions/ | tail -n +{number} | xargs rm -rf {versions/}")
+    run(f"ls -t {dest} | tail -n +{number} | xargs rm -rf {dest}/")
