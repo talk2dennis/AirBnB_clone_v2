@@ -40,14 +40,14 @@ def do_deploy(archive_path):
     dest = f"/data/web_static/releases/{p_name}"
     if os.path.exists(archive_path):
         put(archive_path, "/tmp/")
-        run(f"sudo mkdir -p {dest}")
-        run(f"sudo mkdir -p /data/web_static/current")
-        run(f"sudo tar -xzf /tmp/{f_name} -C {dest}")
-        run(f"sudo rm /tmp/{f_name}")
-        run(f"sudo mv {dest}/web_static/* {dest}")
-        run(f"sudo rm -rf {dest}/web_static")
-        run("sudo rm -rf /data/web_static/current")
-        run(f"sudo ln -sf {dest}/ /data/web_static/current")
+        run(f"mkdir -p {dest}")
+        run(f"mkdir -p /data/web_static/current")
+        run(f"tar -xzf /tmp/{f_name} -C {dest}")
+        run(f"rm /tmp/{f_name}")
+        run(f"mv {dest}/web_static/* {dest}")
+        run(f"rm -rf {dest}/web_static")
+        run("rm -rf /data/web_static/current")
+        run(f"ln -sf {dest}/ /data/web_static/current")
         print("New version deployed!")
         return True
     else:
