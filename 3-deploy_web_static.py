@@ -23,8 +23,7 @@ def do_pack():
     time = datetime.now().strftime("%Y%m%d%H%M%S")
 
     local("mkdir -p versions")
-    result = local(f"tar -cvzf versions/web_static_{time}.tgz web_static/",
-                   capture=True)
+    result = local(f"tar -cvzf versions/web_static_{time}.tgz web_static/")
     if result.succeeded:
         return f"versions/web_static_{time}.tgz"
     else:
@@ -50,15 +49,6 @@ def do_deploy(archive_path):
         run(f"sudo ln -sf {dest}/ /data/web_static/current")
         print("New version deployed!")
 
-        local(f"cp {archive_path} /tmp/")
-        local(f"sudo mkdir -p {dest}")
-        local(f"sudo mkdir -p /data/web_static/current")
-        local(f"sudo tar -xzf /tmp/{f_name} -C {dest}")
-        local(f"sudo rm /tmp/{f_name}")
-        local(f"sudo mv {dest}/web_static/* {dest}")
-        local(f"sudo rm -rf {dest}/web_static")
-        local("sudo rm -rf /data/web_static/current")
-        local(f"sudo ln -sf {dest}/ /data/web_static/current")
         return True
     else:
         return False
