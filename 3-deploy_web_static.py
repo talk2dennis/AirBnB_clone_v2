@@ -11,7 +11,7 @@ import os
 
 
 env.user = "ubuntu"
-env.hosts = ["54.197.44.251", "34.207.121.185"]
+env.hosts = ["54.197.44.251", "34.207.121.185", "localhost"]
 
 
 def do_pack():
@@ -49,6 +49,16 @@ def do_deploy(archive_path):
         run("sudo rm -rf /data/web_static/current")
         run(f"sudo ln -sf {dest}/ /data/web_static/current")
         print("New version deployed!")
+
+        local(f"cp {archive_path} /tmp/")
+        local(f"sudo mkdir -p {dest}")
+        local(f"sudo mkdir -p /data/web_static/current")
+        local(f"sudo tar -xzf /tmp/{f_name} -C {dest}")
+        local(f"sudo rm /tmp/{f_name}")
+        local(f"sudo mv {dest}/web_static/* {dest}")
+        local(f"sudo rm -rf {dest}/web_static")
+        local("sudo rm -rf /data/web_static/current")
+        local(f"sudo ln -sf {dest}/ /data/web_static/current")
         return True
     else:
         return False
