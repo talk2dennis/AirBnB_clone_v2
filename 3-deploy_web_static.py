@@ -11,7 +11,7 @@ import os
 
 
 env.user = "ubuntu"
-env.hosts = ["54.197.44.251", "34.207.121.185", "localhost"]
+env.hosts = ["100.25.37.77", "3.85.175.143"]
 
 
 def do_pack():
