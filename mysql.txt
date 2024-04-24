@@ -1,0 +1,88 @@
+# create user with password
+create user 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
+
+# grant permisions
+GRANT REPLICATION CLIENT ON *.* TO 'holberton_user'@'localhost';
+
+# create database
+CREATE database tyrell_corp;
+
+# create a table in tyrell_corp databases
+use tyrell_corp;
+CREATE TABLE nexus6 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(250)
+);
+
+INSERT INTO nexus6(name) VALUES("Leon");
+
+# grant select to holberton_user on our table tyrell_corp
+grant select on tyrell_corp.nexus6 to holberton_user@localhost;
+
+# check the grant
+grant select on tyrell_corp.nexus6 to holberton_user@localhost;
+
+# create replica_user with password
+create user 'replica_user'@'%' IDENTIFIED BY 'gentle.123';
+
+# grant replica permision to replica_user
+GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'%';
+
+# grant select to holberton_user on mysql.user table
+grant select on mysql.user to holberton_user@localhost;
+
+
+# steps to configure your db
+# in you conf file do these..
+
+
+# restart and reload you db
+sudo service mysql reload
+FLUSH PRIVILEGES;
+FLUSH TABLES WITH READ LOCK;
+SHOW MASTER STATUS;
+
+# create mysql dump of your master database on a new terminal and exit
+sudo mysqldump -u root tyrell_corp > tyrell_corp.sql
+
+# unlock the table from the other terminal and exit
+UNLOCK TABLES;
+exit;
+
+# on the other slave database, you only need to create the database and not the table
+move the mysql snapshot done on the master to the slave
+sudo mysql tyrell_corp < /tmp/tyrell_corp.sql
+
+# Configuring the Replica Database to sync with the master
+# myconf in the slave database
+server-id = 2
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = tyrell_corp
+relay-log = /var/log/mysql/mysql-relay-bin.log
+
+# restart the mysql
+sudo service mysql reload
+
+# start replication
+sudo mysql
+
+CHANGE MASTER TO
+MASTER_HOST='100.25.37.77',
+MASTER_USER='replica_user',
+MASTER_PASSWORD='gentle.123',
+MASTER_LOG_FILE='mysql-bin.000001',
+MASTER_LOG_POS=306;
+
+
+# start slave
+START SLAVE;
+
+# check status
+SHOW SLAVE STATUS\G;
+
+
+# you can now start adding data into the master database and it will reflect in the slave database;
+
+
+
+
